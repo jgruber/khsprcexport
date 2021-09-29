@@ -5,4 +5,5 @@ fdfgen==0.16.1
 Jinja2==3.0.1
 MarkupSafe==2.0.1
 pycodestyle==2.7.0
+pypdftk==0.5
 toml==0.10.2
