@@ -348,7 +348,7 @@ def main():
     ]
 
     if args.pdf:
-        required_files.append(args.pdf_template_file)
+        required_files.append(args.pdftemplate)
 
     for file in required_files:
         file_path = os.path.join(args.khsdatadir, file)
