@@ -24,7 +24,31 @@ The linux version, `pdftk`, is included in the standard package respositories fo
 sudo apt install pdftk
 ```
 
-## run
+## Running the create_publisher_record_cards.py Report Script in a Conatiner
+
+Clone the repository:
+
+```bash
+git clone https://github.com/jgruber/khsprcexport.git
+cd khsprcexport
+```
+
+Build the docker container:
+
+```bash
+docker build -t "khsprcexport:latest" .
+```
+
+Run the container with two volume mounts:
+
+/data = Your KHS data directory
+/output = The output path for your PDF S-21-E output
+
+```bash
+docker run --rm -v /KHS/data:/data  -v /tmp/backups/output:/output khsprcexport:latest
+```
+
+## Running Report Scripts Locally
 
 Createing Pubisher Record cards with *create_publisher_record_cards.py*
 
