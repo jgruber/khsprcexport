@@ -323,7 +323,7 @@ def main():
     )
     ap.add_argument(
         '--pdftemplate',
-        help='S-21-E.pdf original PDF template file - default is ./template/S-21_E.pdf',
+        help='S-21-E.pdf original PDF template file - default is ./templates/S-21_E.pdf',
         default=os.path.join(os.path.dirname(os.path.realpath(__file__)), 'templates', 'S-21-E.pdf'),
         required=False
     )

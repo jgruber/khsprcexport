@@ -26,7 +26,7 @@ sudo apt install pdftk
 
 ## run
 
-*create_publisher_record_cards.py*
+Createing Pubisher Record cards with *create_publisher_record_cards.py*
 
 `create_publisher_record_cards.py --khsdatadir=[path to your DBF files] [--json|pdf]`
 
@@ -44,7 +44,7 @@ optional arguments:
   --json                create reports json
   --pdf                 create S-21-E PDFs
   --pdftemplate PDFTEMPLATE
-                        S-21-E.pdf original PDF template file - default is ./template/S-21_E.pdf
+                        S-21-E.pdf original PDF template file - default is ./templates/S-21_E.pdf
   --zip                 create a zip archive the output folder
   --zipfilename ZIPFILENAME
                         the zip file to create
@@ -52,7 +52,7 @@ optional arguments:
 
 The output directory will contain either the JSON (`--json`) or S-21-E PDF (`--pdf`) publisher record cards arranged per sfl 22:12.
 
-```
+```bash
 .
 ├── active
 │   ├── pioneers
@@ -75,13 +75,13 @@ The output directory will contain either the JSON (`--json`) or S-21-E PDF (`--p
 
 If the `--zip` option is used, the output directory will archived in a single zip file. The zip file name can be passed with the `--zipfilename` option or will be named with an ISO timestamp.
 
-```
+```bash
 prcs-2021-10-01T20:53:41.729649.zip
 ```
 
 ## Utility modules
 
-*field_service_groups.py*
+Exporting or Analyzing Service Groups with *field_service_groups.py*
 
 ```bash
 usage: field_service_groups.py [options]
@@ -126,7 +126,7 @@ The exported fields service groups are in an intermediate JSON format with some 
 ]
 ```
 
-*field_service_records.py*
+Exporting or Analyzing Service Reports with *field_service_records.py*
 
 ```bash
 usage: field_service_records.py [options]
