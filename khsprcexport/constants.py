@@ -1,0 +1,3 @@
+FSGROUP_FILE = 'Fsgroups.DBF'
+NAMES_FILE = 'Names.DBF'
+FIELD_SERVICE_FILE = 'Field_service.DBF'

@@ -26,12 +26,12 @@ sudo apt install pdftk
 
 ## run
 
-*export_khs_to_prcs.py*
+*create_publisher_record_cards.py*
 
-`export_khs_to_prcs.py --khsdatadir=[path to your DBF files]`
+`create_publisher_record_cards.py --khsdatadir=[path to your DBF files]`
 
 ```bash
-usage: export_khs_to_prcs.py [options]
+usage: create_publisher_record_cards.py [options]
 
 reads KHS DBF files and creates S-21-E pdfs in a virtual card file
 
@@ -81,10 +81,10 @@ prcs-2021-10-01T20:53:41.729649.zip
 
 ## Utility modules
 
-*create_field_service_groups_records.py*
+*field_service_groups.py*
 
 ```bash
-usage: create_field_service_group_records.py [options]
+usage: field_service_groups.py [options]
 
 reads KHS DBF files and creates field service group JSON data file
 
@@ -126,10 +126,10 @@ The exported fields service groups are in an intermediate JSON format with some 
 ]
 ```
 
-*create_field_service_records.py*
+*field_service_records.py*
 
 ```bash
-usage: create_field_service_records.py [options]
+usage: field_service_records.py [options]
 
 reads KHS DBF files and creates field service JSON data file
 
