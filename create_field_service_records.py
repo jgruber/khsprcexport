@@ -146,7 +146,7 @@ Parse command arguments and excute export workflow
 def main():
     ap = argparse.ArgumentParser(
         prog='create_field_service_records',
-        usage='%(prog)s [options]',
+        usage='%(prog)s.py [options]',
         description='reads KHS DBF files and creates field service JSON data file',
     )
     ap.add_argument(

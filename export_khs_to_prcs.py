@@ -969,8 +969,8 @@ Parse command arguments and excute export workflow
 
 def main():
     ap = argparse.ArgumentParser(
-        prog='export_khs_to_prcs.py',
-        usage='%(prog)s [options]',
+        prog='export_khs_to_prcs',
+        usage='%(prog)s.py [options]',
         description='reads KHS DBF files and creates S-21-E pdfs in a virtual card file',
     )
     ap.add_argument(
