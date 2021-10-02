@@ -316,75 +316,6 @@ def _get_months_in_service_year(service_year):
     ]
 
 
-def _get_collection_months_dictionary():
-    (first_service_year, second_service_year) = _get_service_years()
-    months = [
-        {
-            'service_year': first_service_year,
-            'total_placements_field': '1-Place_Total',
-            'total_video_showings_field': '1-Video_Total',
-            'total_hours_field': '1-Hours_Total',
-            'total_return_visits_field': '1-RV_Total',
-            'total_studies_field': '1-Studies_Total',
-            'average_placements_field': '1-Place_Average',
-            'average_video_showings_field': '1-Video_Average',
-            'average_hours_field': '1-Hours_Average',
-            'average_return_visits_field': '1-RV_Average',
-            'average_studies_field': '1-Studies_Average',
-            'months': []
-        },
-        {
-            'service_year': second_service_year,
-            'total_placements_field': '2-Place_Total',
-            'total_video_showings_field': '2-Video_Total',
-            'total_hours_field': '2-Hours_Total',
-            'total_return_visits_field': '2-RV_Total',
-            'total_studies_field': '2-Studies_Total',
-            'average_placements_field': '2-Place_Average',
-            'average_video_showings_field': '2-Video_Average',
-            'average_hours_field': '2-Hours_Average',
-            'average_return_visits_field': '2-RV_Average',
-            'average_studies_field': '2-Studies_Average',
-            'months': []
-        }
-    ]
-    remark_fields = [
-        'RemarksSeptember',
-        'RemarksOctober',
-        'RemarksNovember',
-        'RemarksDecember',
-        'RemarksJanuary',
-        'RemarksFebruary',
-        'RemarksMarch',
-        'RemarksApril',
-        'RemarksMay',
-        'RemarksJune',
-        'RemarksJuly',
-        'RemarksAugust'
-    ]
-    for page in range(2):
-        page_indx = page + 1
-        for indx, mi in enumerate([9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8]):
-            field_index = indx + 1
-            year = months[page]['service_year']
-            if mi > 8:
-                year = months[page]['service_year'] - 1
-            remarks_suffix = ''
-            if page > 0:
-                remarks_suffix = '_2'
-            months[page]['months'].append({
-                'year': year,
-                'month': mi,
-                'placements_field': '%d-Place_%d' % (page_indx, field_index),
-                'video_showings_field': '%d-Video_%d' % (page_indx, field_index),
-                'hours_field': '%d-Hours_%d' % (page_indx, field_index),
-                'return_visits_field': '%d-RV_%d' % (page_indx, field_index),
-                'studies_field': '%d-Studies_%d' % (page_indx, field_index),
-                'remarks_field': '%s%s' % (remark_fields[indx], remarks_suffix)
-            })
-    return months
-
-
 def _populate_fsgs(khsdatadir):
     global FSGS, PUBLISHERS
     (FSGS, PUBLISHERS) = fsgs.export_field_service_groups(
@@ -408,15 +339,13 @@ def _make_dir_name(string):
     return ''.join(c for c in string if c.isalnum).rstrip().replace(' ', '_')
 
 
-def _zipdir(zipfilename, directory, zippassword=None):
+def _zipdir(zipfilename, directory):
     zf = zipfile.ZipFile(zipfilename, 'w')
     for dirname, subdirs, files in os.walk(directory):
         for filename in files:
             file_path = os.path.join(dirname, filename)
             target_path = file_path.replace(directory, '')
             zf.write(file_path, target_path)
-    if zippassword:
-        zf.setpassword(b"%s" % zippassword)
     zf.close()
 
 
@@ -560,17 +489,17 @@ def _generate_dummy_report():
     report['reports'] = []
     for sy in service_years:
         report['summary'][sy] = {
-                'total_placements': 0,
-                'avg_placements': 0,
-                'total_video_showings': 0,
-                'avg_video_showings': 0,
-                'total_hours': 0,
-                'avg_hours': 0,
-                'total_return_visits': 0,
-                'avg_return_visits': 0,
-                'total_studies': 0,
-                'avg_studies': 0,
-                'number_of_reports': 0
+            'total_placements': 0,
+            'avg_placements': 0,
+            'total_video_showings': 0,
+            'avg_video_showings': 0,
+            'total_hours': 0,
+            'avg_hours': 0,
+            'total_return_visits': 0,
+            'avg_return_visits': 0,
+            'total_studies': 0,
+            'avg_studies': 0,
+            'number_of_reports': 0
         }
         report['reports'] = report['reports'] + [
             {
@@ -899,9 +828,11 @@ def _generate_summary_reports(output_dir, json_output=False, pdf_output=True):
     publisher_reports = _generate_dummy_report()
     publisher_reports['header']['name'] = 'Auxiliary Pioneer Summary'
     publisher_reports['header']['file_name_prefix'] = 'Publishers'
-    
-    first_sy_month_indexes = { 9:0, 10:1, 11:2, 12:3, 1:4, 2:5, 3:6, 4:7, 5:8, 6:9, 7:10, 8:11 }
-    second_sy_month_indexes = { 9:12, 10:13, 11:14, 12:15, 1:16, 2:17, 3:18, 4:19, 5:20, 6:21, 7:22, 8:23 }
+
+    first_sy_month_indexes = {9: 0, 10: 1, 11: 2, 12: 3,
+                              1: 4, 2: 5, 3: 6, 4: 7, 5: 8, 6: 9, 7: 10, 8: 11}
+    second_sy_month_indexes = {9: 12, 10: 13, 11: 14, 12: 15,
+                               1: 16, 2: 17, 3: 18, 4: 19, 5: 20, 6: 21, 7: 22, 8: 23}
 
     for sr in FSRECS:
         if sr['service_year'] in service_years:
@@ -909,13 +840,15 @@ def _generate_summary_reports(output_dir, json_output=False, pdf_output=True):
             if sr['service_year'] == service_years[0]:
                 month_index = first_sy_month_indexes[sr['month']]
             if sr['service_year'] == service_years[1]:
-                month_index = second_sy_month_indexes[sr['month']]                        
+                month_index = second_sy_month_indexes[sr['month']]
             if sr['pioneer']:
                 rs = pioneer_reports['summary'][sr['service_year']]
                 rs['total_placements'] = rs['total_placements'] + sr['placements']
-                rs['total_video_showings'] = rs['total_video_showings'] + sr['video_showings']
+                rs['total_video_showings'] = rs['total_video_showings'] + \
+                    sr['video_showings']
                 rs['total_hours'] = rs['total_hours'] + sr['hours']
-                rs['total_return_visits'] = rs['total_placements'] + sr['placements']
+                rs['total_return_visits'] = rs['total_placements'] + \
+                    sr['placements']
                 rs['total_studies'] = rs['total_placements'] + sr['placements']
                 rs['number_of_reports'] = rs['number_of_reports'] + 1
                 mr = pioneer_reports['reports'][month_index]
@@ -930,9 +863,11 @@ def _generate_summary_reports(output_dir, json_output=False, pdf_output=True):
             elif sr['auxiliary_pioneer']:
                 rs = auxiliary_pioneer_reports['summary'][sr['service_year']]
                 rs['total_placements'] = rs['total_placements'] + sr['placements']
-                rs['total_video_showings'] = rs['total_video_showings'] + sr['video_showings']
+                rs['total_video_showings'] = rs['total_video_showings'] + \
+                    sr['video_showings']
                 rs['total_hours'] = rs['total_hours'] + sr['hours']
-                rs['total_return_visits'] = rs['total_placements'] + sr['placements']
+                rs['total_return_visits'] = rs['total_placements'] + \
+                    sr['placements']
                 rs['total_studies'] = rs['total_placements'] + sr['placements']
                 rs['number_of_reports'] = rs['number_of_reports'] + 1
                 mr = auxiliary_pioneer_reports['reports'][month_index]
@@ -947,9 +882,11 @@ def _generate_summary_reports(output_dir, json_output=False, pdf_output=True):
             else:
                 rs = publisher_reports['summary'][sr['service_year']]
                 rs['total_placements'] = rs['total_placements'] + sr['placements']
-                rs['total_video_showings'] = rs['total_video_showings'] + sr['video_showings']
+                rs['total_video_showings'] = rs['total_video_showings'] + \
+                    sr['video_showings']
                 rs['total_hours'] = rs['total_hours'] + sr['hours']
-                rs['total_return_visits'] = rs['total_placements'] + sr['placements']
+                rs['total_return_visits'] = rs['total_placements'] + \
+                    sr['placements']
                 rs['total_studies'] = rs['total_placements'] + sr['placements']
                 rs['number_of_reports'] = rs['number_of_reports'] + 1
                 mr = publisher_reports['reports'][month_index]
@@ -963,22 +900,37 @@ def _generate_summary_reports(output_dir, json_output=False, pdf_output=True):
                 mr['remarks'] = mr['remarks'] + 1
     # calculate averages
     for sy in service_years:
-        pioneer_reports['summary'][sy]['avg_placements'] = round((pioneer_reports['summary'][sy]['total_placements'] / pioneer_reports['summary'][sy]['number_of_reports']), 2)
-        pioneer_reports['summary'][sy]['avg_video_showings'] = round((pioneer_reports['summary'][sy]['total_video_showings'] / pioneer_reports['summary'][sy]['number_of_reports']), 2)
-        pioneer_reports['summary'][sy]['avg_hours'] = round((pioneer_reports['summary'][sy]['total_hours'] / pioneer_reports['summary'][sy]['number_of_reports']), 2)
-        pioneer_reports['summary'][sy]['avg_return_visits'] = round((pioneer_reports['summary'][sy]['total_return_visits'] / pioneer_reports['summary'][sy]['number_of_reports']), 2)
-        pioneer_reports['summary'][sy]['avg_studies'] = round((pioneer_reports['summary'][sy]['total_studies'] / pioneer_reports['summary'][sy]['number_of_reports']), 2)
-        auxiliary_pioneer_reports['summary'][sy]['avg_placements'] = round((auxiliary_pioneer_reports['summary'][sy]['total_placements'] / auxiliary_pioneer_reports['summary'][sy]['number_of_reports']), 2)
-        auxiliary_pioneer_reports['summary'][sy]['avg_video_showings'] = round((auxiliary_pioneer_reports['summary'][sy]['total_video_showings'] / auxiliary_pioneer_reports['summary'][sy]['number_of_reports']), 2)
-        auxiliary_pioneer_reports['summary'][sy]['avg_hours'] = round((auxiliary_pioneer_reports['summary'][sy]['total_hours'] / auxiliary_pioneer_reports['summary'][sy]['number_of_reports']), 2)
-        auxiliary_pioneer_reports['summary'][sy]['avg_return_visits'] = round((auxiliary_pioneer_reports['summary'][sy]['total_return_visits'] / auxiliary_pioneer_reports['summary'][sy]['number_of_reports']), 2)
-        auxiliary_pioneer_reports['summary'][sy]['avg_studies'] = round((auxiliary_pioneer_reports['summary'][sy]['total_studies'] / auxiliary_pioneer_reports['summary'][sy]['number_of_reports']), 2)
-        publisher_reports['summary'][sy]['avg_placements'] = round((publisher_reports['summary'][sy]['total_placements'] / publisher_reports['summary'][sy]['number_of_reports']), 2)
-        publisher_reports['summary'][sy]['avg_video_showings'] = round((publisher_reports['summary'][sy]['total_video_showings'] / publisher_reports['summary'][sy]['number_of_reports']), 2)
-        publisher_reports['summary'][sy]['avg_hours'] = round((publisher_reports['summary'][sy]['total_hours'] / publisher_reports['summary'][sy]['number_of_reports']), 2)
-        publisher_reports['summary'][sy]['avg_return_visits'] = round((publisher_reports['summary'][sy]['total_return_visits'] / publisher_reports['summary'][sy]['number_of_reports']), 2)
-        publisher_reports['summary'][sy]['avg_studies'] = round((publisher_reports['summary'][sy]['total_studies'] / publisher_reports['summary'][sy]['number_of_reports']), 2)
-        
+        pioneer_reports['summary'][sy]['avg_placements'] = round(
+            (pioneer_reports['summary'][sy]['total_placements'] / pioneer_reports['summary'][sy]['number_of_reports']), 2)
+        pioneer_reports['summary'][sy]['avg_video_showings'] = round(
+            (pioneer_reports['summary'][sy]['total_video_showings'] / pioneer_reports['summary'][sy]['number_of_reports']), 2)
+        pioneer_reports['summary'][sy]['avg_hours'] = round(
+            (pioneer_reports['summary'][sy]['total_hours'] / pioneer_reports['summary'][sy]['number_of_reports']), 2)
+        pioneer_reports['summary'][sy]['avg_return_visits'] = round(
+            (pioneer_reports['summary'][sy]['total_return_visits'] / pioneer_reports['summary'][sy]['number_of_reports']), 2)
+        pioneer_reports['summary'][sy]['avg_studies'] = round(
+            (pioneer_reports['summary'][sy]['total_studies'] / pioneer_reports['summary'][sy]['number_of_reports']), 2)
+        auxiliary_pioneer_reports['summary'][sy]['avg_placements'] = round(
+            (auxiliary_pioneer_reports['summary'][sy]['total_placements'] / auxiliary_pioneer_reports['summary'][sy]['number_of_reports']), 2)
+        auxiliary_pioneer_reports['summary'][sy]['avg_video_showings'] = round(
+            (auxiliary_pioneer_reports['summary'][sy]['total_video_showings'] / auxiliary_pioneer_reports['summary'][sy]['number_of_reports']), 2)
+        auxiliary_pioneer_reports['summary'][sy]['avg_hours'] = round(
+            (auxiliary_pioneer_reports['summary'][sy]['total_hours'] / auxiliary_pioneer_reports['summary'][sy]['number_of_reports']), 2)
+        auxiliary_pioneer_reports['summary'][sy]['avg_return_visits'] = round(
+            (auxiliary_pioneer_reports['summary'][sy]['total_return_visits'] / auxiliary_pioneer_reports['summary'][sy]['number_of_reports']), 2)
+        auxiliary_pioneer_reports['summary'][sy]['avg_studies'] = round(
+            (auxiliary_pioneer_reports['summary'][sy]['total_studies'] / auxiliary_pioneer_reports['summary'][sy]['number_of_reports']), 2)
+        publisher_reports['summary'][sy]['avg_placements'] = round(
+            (publisher_reports['summary'][sy]['total_placements'] / publisher_reports['summary'][sy]['number_of_reports']), 2)
+        publisher_reports['summary'][sy]['avg_video_showings'] = round(
+            (publisher_reports['summary'][sy]['total_video_showings'] / publisher_reports['summary'][sy]['number_of_reports']), 2)
+        publisher_reports['summary'][sy]['avg_hours'] = round(
+            (publisher_reports['summary'][sy]['total_hours'] / publisher_reports['summary'][sy]['number_of_reports']), 2)
+        publisher_reports['summary'][sy]['avg_return_visits'] = round(
+            (publisher_reports['summary'][sy]['total_return_visits'] / publisher_reports['summary'][sy]['number_of_reports']), 2)
+        publisher_reports['summary'][sy]['avg_studies'] = round(
+            (publisher_reports['summary'][sy]['total_studies'] / publisher_reports['summary'][sy]['number_of_reports']), 2)
+
     # clean up remarks labels
     for r in pioneer_reports['reports']:
         r['remarks'] = "%d reports" % r['remarks']
@@ -1018,7 +970,7 @@ Parse command arguments and excute export workflow
 def main():
     ap = argparse.ArgumentParser(
         prog='export_khs_to_prcs.py',
-        usage='%(prog)s.py [options]',
+        usage='%(prog)s [options]',
         description='reads KHS DBF files and creates S-21-E pdfs in a virtual card file',
     )
     ap.add_argument(
@@ -1058,12 +1010,6 @@ def main():
         required=False,
         default='prcs-%s.zip' % datetime.datetime.now().isoformat()
     )
-    ap.add_argument(
-        '--zippassword',
-        help='password to set for the zip file',
-        required=False,
-        default=None
-    )
 
     args = ap.parse_args()
 
@@ -1101,7 +1047,7 @@ def main():
     _generate_summary_reports(args.outputdir, args.json, args.pdf)
 
     if args.zip:
-        _zipdir(args.zipfilename, args.outputdir, args.zippassword)
+        _zipdir(args.zipfilename, args.outputdir)
 
 
 '''
