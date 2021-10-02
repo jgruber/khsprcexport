@@ -12,6 +12,12 @@ source .venv/bin/activate
 pip3 install -r requirements.txt
 ```
 
+The pypdftk python module requires that the pdftk application be installed. 
+
+See installtion for the server install at:
+
+https://www.pdflabs.com/tools/pdftk-server/
+
 ## run
 
 *export_khs_to_prcs.py*
