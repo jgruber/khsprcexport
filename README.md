@@ -12,7 +12,7 @@ source .venv/bin/activate
 pip3 install -r requirements.txt
 ```
 
-The pypdftk python module requires that the pdftk application be installed. 
+The pypdftk python module requires that the pdftk application be installed and available on the path for the user running the script.
 
 See installtion for the server install at:
 
