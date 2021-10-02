@@ -42,6 +42,7 @@ docker build -t "khsprcexport:latest" .
 Run the container with two volume mounts:
 
 /data = Your KHS data directory
+
 /output = The output path for your PDF S-21-E output
 
 ```bash
