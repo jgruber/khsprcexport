@@ -4,6 +4,7 @@ import argparse
 import json
 import os
 import sys
+import datetime
 
 from dbfread import DBF
 
@@ -43,27 +44,54 @@ def export_field_service(fs_file_path):
         field_index[f] = idx
     publisher_id_index = field_index['NAMES_ID']
     year_month_index = field_index['YEARMONTH']
-    placements_indx = field_index['PLACEMENTS']
+    placements_index = field_index['PLACEMENTS']
     video_showings_index = field_index['VIDEOS']
     hours_index = field_index['HOURS']
     return_visits_index = field_index['RVS']
     studies_index = field_index['STUDIES']
     remarks_index = field_index['REMARKS']
+    par_index = field_index['PAR']
 
     fs_reports = []
     for rec in fs_db.records:
         vals = list(rec.values())
+        
+        auxiliary_pioneer = False
+        pioneer = False
+        if vals[par_index] == 2:
+            auxiliary_pioneer = True
+        if vals[par_index] == 3:
+            pioneer = True
+        year = int(vals[year_month_index][0:4])
+        month = int(vals[year_month_index][-2:])
+        service_year = year
+        if month > 8:
+            service_year = year + 1
+        if vals[placements_index] is None:
+            vals[placements_index] = 0
+        if vals[video_showings_index] is None:
+            vals[video_showings_index] = 0
+        if vals[hours_index] is None:
+            vals[hours_index] = 0
+        if vals[return_visits_index] is None:
+            vals[return_visits_index] = 0
+        if vals[studies_index] is None:
+            vals[studies_index] = 0
         fs_reports.append(
             {
                 'publisher_id': vals[publisher_id_index],
-                'year': int(vals[year_month_index][0:4]),
-                'month': int(vals[year_month_index][-2:]),
-                'placements': vals[placements_indx],
+                'year': year,
+                'month': month,
+                'service_year': service_year,
+                'placements': vals[placements_index],
                 'video_showings': vals[video_showings_index],
                 'hours': vals[hours_index],
                 'return_visits': vals[return_visits_index],
                 'studies': vals[studies_index],
-                'remarks': vals[remarks_index]
+                'remarks': vals[remarks_index],
+                'pioneer': pioneer,
+                'auxiliary_pioneer': auxiliary_pioneer,
+                'timestamp': datetime.datetime.strptime("%d-%d" % (year, month), '%Y-%m').timestamp() 
             }
         )
     return fs_reports
@@ -147,6 +175,7 @@ def main():
         file_path = os.path.join(args.khsdatadir, file)
         if not os.path.exists(file_path):
             print('\nCan not find %s, a required file\n')
+            sys.exit(1)
 
     if args.analysis:
         get_analysis(
