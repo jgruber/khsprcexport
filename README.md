@@ -18,6 +18,12 @@ See installtion for the server install at:
 
 https://www.pdflabs.com/tools/pdftk-server/
 
+The linux version, `pdftk`, is included in the standard package respositories for every major distribution. Try your package manager for a quck install. 
+
+```bash
+sudo apt install pdftk
+```
+
 ## run
 
 *export_khs_to_prcs.py*
