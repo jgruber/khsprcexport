@@ -24,6 +24,8 @@ The linux version, `pdftk`, is included in the standard package respositories fo
 sudo apt install pdftk
 ```
 
+Or, you just run it in a container.. :-).
+
 ## Running the create_publisher_record_cards.py Report Script in a Conatiner
 
 Clone the repository:
