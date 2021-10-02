@@ -14,7 +14,9 @@ pip3 install -r requirements.txt
 
 ## run
 
-export_khs_to_prcs.py --khsdatadir=[path to your DBF files]
+*export_khs_to_prcs.py*
+
+`export_khs_to_prcs.py --khsdatadir=[path to your DBF files]`
 
 ```bash
 usage: export_khs_to_prcs.py [options]
@@ -38,7 +40,7 @@ optional arguments:
 
 ## Utility modules
 
-create_field_service_groups_records.py
+*create_field_service_groups_records.py*
 
 ```bash
 usage: create_field_service_group_records.py [options]
@@ -53,7 +55,37 @@ optional arguments:
   --analysis            print analysis only
 ```
 
-create_field_service_records.py
+The exported fields service groups are in an intermediate JSON format with some embleshments. Running with with only the `--khsdatadir` will export the JSON format to stdout.
+
+```json
+[
+  {
+    "id": 1,
+    "name": "Unassigned",
+    "publishers": [
+      {
+        "id": 112,
+        "last_name": "Doe",
+        "first_name": "John",
+        "male": true,
+        "female": false,
+        "anointed": false,
+        "other_sheep": true,
+        "elder": false,
+        "ministerial_servant": false,
+        "regular_pioneer": false,
+        "regular_auxiliary_pioneer": false,
+        "date_of_birth": "2000-01-01",
+        "baptized": false,
+        "unbatized_publisher": true,
+        "date_immersed": "UBP"
+      }
+    ]
+  }  
+]
+```
+
+*create_field_service_records.py*
 
 ```bash
 usage: create_field_service_records.py [options]
@@ -66,4 +98,26 @@ optional arguments:
                         path to KHS data files
   --jsonout JSONOUT     export JSON file
   --analysis            print analysis only
+```
+
+The field service records are exported in a intermediate JSON with minor embleshments. Running with with only the `--khsdatadir` will export the JSON format to stdout. The embleshed `timestamp` attribute make sorting reports simple.
+
+```json
+[
+  {
+    "publisher_id": 754,
+    "year": 2021,
+    "month": 1,
+    "service_year": 2021,
+    "placements": 4,
+    "video_showings": 2,
+    "hours": 6.0,
+    "return_visits": 0,
+    "studies": 0,
+    "remarks": "",
+    "pioneer": false,
+    "auxiliary_pioneer": false,
+    "timestamp": 1609480800.0
+  }
+]
 ```
