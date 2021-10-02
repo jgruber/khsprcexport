@@ -153,6 +153,24 @@ The exported fields service groups are in an intermediate JSON format with some 
 ]
 ```
 
+If you run with the `--analysis` option you will get a summary of the service group data.
+
+```bash
+./field_service_groups.py --khsdatadir=./data --analysis
+Field Service Group Analysis
+----------------------------
+Number of Groups: 7
+Group: Unassigned, Id: 1, Number Publishers: 53
+Group: SG 1, Id: 4, Number Publishers: 23
+Group: SG 2, Id: 5, Number Publishers: 42
+Group: SG 3, Id: 6, Number Publishers: 36
+Group: SG 4, Id: 8, Number Publishers: 33
+Group: SG 5, Id: 10, Number Publishers: 36
+Group: SG 6, Id: 12, Number Publishers: 37
+Number of Publishers: 260
+
+```
+
 Exporting or Analyzing Service Reports with *field_service_records.py*
 
 ```bash
@@ -188,4 +206,19 @@ The field service records are exported in a intermediate JSON with minor emblesh
     "timestamp": 1609480800.0
   }
 ]
+```
+
+If you run with the `--analysis` option you will get a summary of the service group data.
+
+```bash
+./field_service_records.py --khsdatadir=./data --analysis
+Field Service Report Analysis
+----------------------------
+Number of Reports: 7586
+Number of distinct publishers: 258
+Number of zero hour reports: 1786
+Earliest report: 1-2016
+Latest report: 12-2022
+Active Publishers: 138
+Irregular Publishers: 21
 ```
