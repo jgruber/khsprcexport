@@ -38,6 +38,35 @@ optional arguments:
                         the zip file to create
 ```
 
+The output directory will contain either the JSON (`--json`) or S-21-E PDF (`--pdf`) publisher record cards arranged per sfl 22:12.
+
+```
+.
+├── active
+│   ├── pioneers
+│   │   ├── Doe-Joannie.pdf
+│   │   ├── Doe-John.pdf
+│   │   └── Wise-Solomon.pdf
+│   ├── SG_1
+│   │   ├── Faithful-Abrahman.pdf
+│   │   ├── Faithful-Sarah.pdf
+│   │   └── Brave-Ruth.pdf
+│   └── Unassigned
+│       ├── Newly-Zack.pdf
+│       └── Recent-Addus.pdf
+├── AuxiliaryPioneers.pdf
+├── inactive
+│   └── Missing-Ima.pdf
+├── Pioneers.pdf
+└── Publishers.pdf
+```
+
+If the `--zip` option is used, the output directory will archived in a single zip file. The zip file name can be passed with the `--zipfilename` option or will be named with an ISO timestamp.
+
+```
+prcs-2021-10-01T20:53:41.729649.zip
+```
+
 ## Utility modules
 
 *create_field_service_groups_records.py*
