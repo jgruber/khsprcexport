@@ -1,7 +1,20 @@
 # khsprcexport
 Create S-21 PDF or JSON Publisher Record Card exports from KHS DBF files
 
-export_khs_to_prcs.py
+## install
+
+```bash
+git clone https://github.com/jgruber/khsprcexport.git
+cd khsprcexport
+python3 -m venv .venv
+source .venv/bin/activate
+# on window - .venv\Scripts\activate.bat
+pip3 install -r requirements.txt
+```
+
+## run
+
+export_khs_to_prcs.py --khsdatadir=[path to your DBF files]
 
 ```bash
 usage: export_khs_to_prcs.py [options]
