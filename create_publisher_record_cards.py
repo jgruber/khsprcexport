@@ -323,8 +323,8 @@ def main():
     )
     ap.add_argument(
         '--pdftemplate',
-        help='create S-21-E PDFs',
-        default=None,
+        help='S-21-E.pdf original PDF template file - default is ./template/S-21_E.pdf',
+        default=os.path.join(os.path.dirname(os.path.realpath(__file__)), 'templates', 'S-21-E.pdf'),
         required=False
     )
     ap.add_argument(
@@ -341,12 +341,6 @@ def main():
 
     args = ap.parse_args()
 
-    pdf_template_file = os.path.join(
-        os.path.dirname(
-            os.path.realpath(__file__)), 'templates', 'S-21-E.pdf')
-    if args.pdftemplate:
-        pdf_template_file = args.pdftemplate
-
     required_files = [
         constants.FSGROUP_FILE,
         constants.NAMES_FILE,
@@ -354,7 +348,7 @@ def main():
     ]
 
     if args.pdf:
-        required_files.append(pdf_template_file)
+        required_files.append(args.pdf_template_file)
 
     for file in required_files:
         file_path = os.path.join(args.khsdatadir, file)
@@ -367,16 +361,16 @@ def main():
 
     # generate the pionner PRC reports
     _generate_pioneer_reports(
-        args.outputdir, fsgs, publishers, fsrecords, args.json, args.pdf, pdf_template_file)
+        args.outputdir, fsgs, publishers, fsrecords, args.json, args.pdf, args.pdftemplate)
     # generate the inactive PRC reports
     _generate_inactive_reports(
-        args.outputdir, fsgs, publishers, fsrecords, args.json, args.pdf, pdf_template_file)
+        args.outputdir, fsgs, publishers, fsrecords, args.json, args.pdf, args.pdftemplate)
     # generate the fields service group reports
     _generate_fsg_reports(args.outputdir, fsgs, publishers,
-                          fsrecords, args.json, args.pdf, pdf_template_file)
+                          fsrecords, args.json, args.pdf, args.pdftemplate)
     # generate the summary PRC reports
     _generate_summary_reports(args.outputdir, fsgs, publishers,
-                              fsrecords, args.json, args.pdf, pdf_template_file)
+                              fsrecords, args.json, args.pdf, args.pdftemplate)
     # optionally zip up the reports
     if args.zip:
         utils.zipdir(args.zipfilename, args.outputdir)

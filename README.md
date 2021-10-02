@@ -44,7 +44,7 @@ optional arguments:
   --json                create reports json
   --pdf                 create S-21-E PDFs
   --pdftemplate PDFTEMPLATE
-                        create S-21-E PDFs
+                        S-21-E.pdf original PDF template file - default is ./template/S-21_E.pdf
   --zip                 create a zip archive the output folder
   --zipfilename ZIPFILENAME
                         the zip file to create
