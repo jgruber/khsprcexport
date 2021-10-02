@@ -14,7 +14,7 @@ pip3 install -r requirements.txt
 
 The pypdftk python module requires that the pdftk application be installed and available on the path for the user running the script.
 
-See installtion for the server install at:
+See installation for the server install at:
 
 https://www.pdflabs.com/tools/pdftk-server/
 
