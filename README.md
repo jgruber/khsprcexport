@@ -28,7 +28,7 @@ sudo apt install pdftk
 
 *create_publisher_record_cards.py*
 
-`create_publisher_record_cards.py --khsdatadir=[path to your DBF files]`
+`create_publisher_record_cards.py --khsdatadir=[path to your DBF files] [--json|pdf]`
 
 ```bash
 usage: create_publisher_record_cards.py [options]
