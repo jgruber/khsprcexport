@@ -57,7 +57,7 @@ Creating Pubisher Record cards with *create_publisher_record_cards.py*
 
 *NOTE: remember you can not access the data directory while KHS is running*
 
-`create_publisher_record_cards.py --khsdatadir="C:\Majestic Software\KHS\data" [--json|pdf]`
+`python .\create_publisher_record_cards.py --khsdatadir="C:\Majestic Software\KHS\data" [--json|pdf]`
 
 ```bash
 usage: create_publisher_record_cards.py [options]
@@ -112,6 +112,8 @@ prcs-2021-10-01T20:53:41.729649.zip
 
 Exporting or Analyzing Service Groups with *field_service_groups.py*
 
+`python .\field_service_groups.py --khsdatadir="C:\Majestic Software\KHS\data" [--analysis]`
+
 ```bash
 usage: field_service_groups.py [options]
 
@@ -156,6 +158,8 @@ The exported fields service groups are in an intermediate JSON format with some 
 ```
 
 If you run with the `--analysis` option you will get a summary of the service group data.
+
+`python .\field_service_groups.py --khsdatadir="C:\Majestic Software\KHS\data" [--analysis]`
 
 ```bash
 ./field_service_groups.py --khsdatadir=./data --analysis
