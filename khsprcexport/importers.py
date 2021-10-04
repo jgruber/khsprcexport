@@ -41,6 +41,8 @@ Example:
 ]    
 
 '''
+
+
 def create_field_service_groups(fsg_file_path, names_path, excludes=[]):
     names_db = DBF(names_path)
     # build a dictionary of fields we need for the PRC

@@ -15,6 +15,9 @@ def write_json_file(output_file_name=None, data_dict=None):
 
 def write_pdf_file(output_file_name=None, data_dict=None, pdf_template_file=None):
     if output_file_name and data_dict and pdf_template_file:
+        # Let's make sure crazy file paths are passed as one string!
+        pdf_template_file = f'"{pdf_template_file}"'
+        output_file_name = f'"{output_file_name}"'
         try:
             fill_data = {}
             fill_data['Name'] = data_dict['header']['name']
