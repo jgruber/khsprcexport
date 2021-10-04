@@ -8,7 +8,7 @@ git clone https://github.com/jgruber/khsprcexport.git
 cd khsprcexport
 python3 -m venv .venv
 source .venv/bin/activate
-# on window - .venv\Scripts\activate.bat
+# on window run - .venv\Scripts\activate.bat
 pip3 install -r requirements.txt
 ```
 
@@ -53,9 +53,11 @@ docker run --rm -v /KHS/data:/data  -v /tmp/backups/output:/output khsprcexport:
 
 ## Running Report Scripts Locally
 
-Createing Pubisher Record cards with *create_publisher_record_cards.py*
+Creating Pubisher Record cards with *create_publisher_record_cards.py*
 
-`create_publisher_record_cards.py --khsdatadir=[path to your DBF files] [--json|pdf]`
+*NOTE: remember you can not access the data directory while KHS is running*
+
+`create_publisher_record_cards.py --khsdatadir="C:\Majestic Software\KHS\data" [--json|pdf]`
 
 ```bash
 usage: create_publisher_record_cards.py [options]
