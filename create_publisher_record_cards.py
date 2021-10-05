@@ -185,7 +185,7 @@ def _generate_summary_reports(output_dir, fsgs, publishers, fsrecords, json_outp
                 mr = pioneer_reports['reports'][month_index]
                 mr['placements'] = mr['placements'] + sr['placements']
                 mr['video_showings'] = mr['video_showings'] + sr['video_showings']
-                mr['hours'] = mr['hours'] + round(sr['hours'], 2)
+                mr['hours'] = mr['hours'] + sr['hours']
                 mr['return_visits'] = mr['return_visits'] + sr['hours']
                 mr['studies'] = mr['studies'] + sr['studies']
                 if isinstance(mr['remarks'], str):
@@ -204,7 +204,7 @@ def _generate_summary_reports(output_dir, fsgs, publishers, fsrecords, json_outp
                 mr = auxiliary_pioneer_reports['reports'][month_index]
                 mr['placements'] = mr['placements'] + sr['placements']
                 mr['video_showings'] = mr['video_showings'] + sr['video_showings']
-                mr['hours'] = mr['hours'] + round(sr['hours'], 2)
+                mr['hours'] = mr['hours'] + sr['hours']
                 mr['return_visits'] = mr['return_visits'] + sr['hours']
                 mr['studies'] = mr['studies'] + sr['studies']
                 if isinstance(mr['remarks'], str):
@@ -223,7 +223,7 @@ def _generate_summary_reports(output_dir, fsgs, publishers, fsrecords, json_outp
                 mr = publisher_reports['reports'][month_index]
                 mr['placements'] = mr['placements'] + sr['placements']
                 mr['video_showings'] = mr['video_showings'] + sr['video_showings']
-                mr['hours'] = mr['hours'] + round(sr['hours'], 2)
+                mr['hours'] = mr['hours'] + sr['hours']
                 mr['return_visits'] = mr['return_visits'] + sr['hours']
                 mr['studies'] = mr['studies'] + sr['studies']
                 if isinstance(mr['remarks'], str):
@@ -235,6 +235,7 @@ def _generate_summary_reports(output_dir, fsgs, publishers, fsrecords, json_outp
             (pioneer_reports['summary'][sy]['total_placements'] / pioneer_reports['summary'][sy]['number_of_reports']), 2)
         pioneer_reports['summary'][sy]['avg_video_showings'] = round(
             (pioneer_reports['summary'][sy]['total_video_showings'] / pioneer_reports['summary'][sy]['number_of_reports']), 2)
+        pioneer_reports['summary'][sy]['total_hours'] = round(pioneer_reports['summary'][sy]['total_hours'], 2)
         pioneer_reports['summary'][sy]['avg_hours'] = round(
             (pioneer_reports['summary'][sy]['total_hours'] / pioneer_reports['summary'][sy]['number_of_reports']), 2)
         pioneer_reports['summary'][sy]['avg_return_visits'] = round(
@@ -245,6 +246,7 @@ def _generate_summary_reports(output_dir, fsgs, publishers, fsrecords, json_outp
             (auxiliary_pioneer_reports['summary'][sy]['total_placements'] / auxiliary_pioneer_reports['summary'][sy]['number_of_reports']), 2)
         auxiliary_pioneer_reports['summary'][sy]['avg_video_showings'] = round(
             (auxiliary_pioneer_reports['summary'][sy]['total_video_showings'] / auxiliary_pioneer_reports['summary'][sy]['number_of_reports']), 2)
+        auxiliary_pioneer_reports['summary'][sy]['total_hours'] = round(auxiliary_pioneer_reports['summary'][sy]['total_hours'], 2)
         auxiliary_pioneer_reports['summary'][sy]['avg_hours'] = round(
             (auxiliary_pioneer_reports['summary'][sy]['total_hours'] / auxiliary_pioneer_reports['summary'][sy]['number_of_reports']), 2)
         auxiliary_pioneer_reports['summary'][sy]['avg_return_visits'] = round(
@@ -255,6 +257,7 @@ def _generate_summary_reports(output_dir, fsgs, publishers, fsrecords, json_outp
             (publisher_reports['summary'][sy]['total_placements'] / publisher_reports['summary'][sy]['number_of_reports']), 2)
         publisher_reports['summary'][sy]['avg_video_showings'] = round(
             (publisher_reports['summary'][sy]['total_video_showings'] / publisher_reports['summary'][sy]['number_of_reports']), 2)
+        publisher_reports['summary'][sy]['total_hours'] = round(publisher_reports['summary'][sy]['total_hours'], 2)
         publisher_reports['summary'][sy]['avg_hours'] = round(
             (publisher_reports['summary'][sy]['total_hours'] / publisher_reports['summary'][sy]['number_of_reports']), 2)
         publisher_reports['summary'][sy]['avg_return_visits'] = round(
