@@ -336,7 +336,7 @@ def main():
         '--zipfilename',
         help='the zip file to create',
         required=False,
-        default='prcs-%s.zip' % datetime.datetime.now().isoformat()
+        default='prcs-%s.zip' % datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
     )
 
     args = ap.parse_args()
