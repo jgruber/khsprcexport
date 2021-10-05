@@ -343,7 +343,7 @@ def main():
 
     required_files = [
         os.path.join(args.khsdatadir, constants.FSGROUP_FILE),
-        os.path.join(args.khsdatadir, onstants.NAMES_FILE),
+        os.path.join(args.khsdatadir, constants.NAMES_FILE),
         os.path.join(args.khsdatadir, constants.FIELD_SERVICE_FILE)
     ]
 
