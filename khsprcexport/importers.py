@@ -63,6 +63,7 @@ def create_field_service_groups(fsg_file_path, names_path, excludes=[]):
     do_baptism_index = field_index['BAPTIZEDON']
     deceased_index = field_index['DECEASED']
     regular_aux_pioneer_index = field_index['AUX_PIONEE']
+    moved_date_index = field_index['MOVE_DATE']
 
     publishers = {}
     fsg_n = {}
@@ -113,6 +114,9 @@ def create_field_service_groups(fsg_file_path, names_path, excludes=[]):
                 do_baptism = 'UBP'
             else:
                 do_baptism = ''
+        moved_date = vals[moved_date_index]
+        if moved_date:
+            moved_date = moved_date.strftime("%Y-%m-%d")
         deceased = False
         if vals[deceased_index]:
             deceased = True
@@ -132,7 +136,8 @@ def create_field_service_groups(fsg_file_path, names_path, excludes=[]):
                 'date_of_birth': do_birth,
                 'baptized': baptized,
                 'unbatized_publisher': unbaptized_publisher,
-                'date_immersed': do_baptism
+                'date_immersed': do_baptism,
+                'moved_date': moved_date
             }
             fsg_n[fsg_id].append(
                 publishers[vals[0]]
