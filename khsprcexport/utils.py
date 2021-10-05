@@ -141,18 +141,18 @@ def get_reports_totals_avgs(reports=[]):
                 'avg_studies': 0,
                 'number_of_reports': 0
             }
-        service_years[rep['service_year']
-                      ]['number_of_reports'] = service_years[rep['service_year']]['number_of_reports'] + 1
-        service_years[rep['service_year']]['total_placements'] = service_years[rep['service_year']
-                                                                               ]['total_placements'] + rep['placements']
-        service_years[rep['service_year']]['total_video_showings'] = service_years[rep['service_year']
-                                                                                   ]['total_video_showings'] + rep['video_showings']
-        service_years[rep['service_year']
-                      ]['total_hours'] = service_years[rep['service_year']]['total_hours'] + rep['hours']
-        service_years[rep['service_year']]['total_return_visits'] = service_years[rep['service_year']
-                                                                                  ]['total_return_visits'] + rep['return_visits']
-        service_years[rep['service_year']]['total_studies'] = service_years[rep['service_year']
-                                                                            ]['total_studies'] + rep['studies']
+        service_years[rep['service_year']]['number_of_reports'] = (
+            service_years[rep['service_year']]['number_of_reports'] + 1)
+        service_years[rep['service_year']]['total_placements'] = (
+            service_years[rep['service_year']]['total_placements'] + rep['placements'])
+        service_years[rep['service_year']]['total_video_showings'] = (
+            service_years[rep['service_year']]['total_video_showings'] + rep['video_showings'])
+        service_years[rep['service_year']]['total_hours'] = round(
+            service_years[rep['service_year']]['total_hours'] + rep['hours'], 2)
+        service_years[rep['service_year']]['total_return_visits'] = (
+            service_years[rep['service_year']]['total_return_visits'] + rep['return_visits'])
+        service_years[rep['service_year']]['total_studies'] = (
+            service_years[rep['service_year']]['total_studies'] + rep['studies'])
     for sy in service_years.keys():
         if service_years[sy]['number_of_reports'] > 0:
             service_years[sy]['avg_placements'] = round(
