@@ -342,17 +342,15 @@ def main():
     args = ap.parse_args()
 
     required_files = [
-        constants.FSGROUP_FILE,
-        constants.NAMES_FILE,
-        constants.FIELD_SERVICE_FILE
+        os.path.join(args.khsdatadir, constants.FSGROUP_FILE),
+        os.path.join(args.khsdatadir, onstants.NAMES_FILE),
+        os.path.join(args.khsdatadir, constants.FIELD_SERVICE_FILE)
     ]
 
     if args.pdf:
         required_files.append(args.pdftemplate)
 
-    for file in required_files:
-        file_path = os.path.join(args.khsdatadir, file)
-        # file_path = f'"{file_path}"'
+    for file_path in required_files:
         if not os.path.exists(file_path):
             print("\nCan not find %s, a required file\n" % file_path)
             sys.exit(1)
