@@ -5,6 +5,7 @@ import zipfile
 
 from khsprcexport import importers
 
+
 def get_service_years():
     now = datetime.datetime.now()
     first_service_year = now.year
@@ -14,17 +15,20 @@ def get_service_years():
     return (first_service_year, second_service_year)
 
 
-def get_past_six_months():
-    now = datetime.datetime.now()
+def get_past_six_months(start_year=None, start_month=None):
+    start = datetime.datetime.now()
+    if start_month and start_year:
+        start = datetime.datetime.strptime(
+            "%s-%s-15" % (start_year, start_month), '%Y-%m-%d')
     # still collecting for last month
-    if now.day < 15:
-        now = now - drd.relativedelta(months=1)
-    m1 = now - drd.relativedelta(months=6)
-    m2 = now - drd.relativedelta(months=5)
-    m3 = now - drd.relativedelta(months=4)
-    m4 = now - drd.relativedelta(months=3)
-    m5 = now - drd.relativedelta(months=2)
-    m6 = now - drd.relativedelta(months=1)
+    if start.day < 15:
+        start = start - drd.relativedelta(months=1)
+    m1 = start - drd.relativedelta(months=6)
+    m2 = start - drd.relativedelta(months=5)
+    m3 = start - drd.relativedelta(months=4)
+    m4 = start - drd.relativedelta(months=3)
+    m5 = start - drd.relativedelta(months=2)
+    m6 = start - drd.relativedelta(months=1)
     return [
         {'month': m1.month, 'year': m1.year},
         {'month': m2.month, 'year': m2.year},
@@ -412,3 +416,24 @@ def generate_dummy_report():
             }
         ]
     return report
+
+
+def get_active_inactive_publisher_count(fs_records=[], start_year=None, start_month=None):
+    month_years = get_past_six_months(start_year, start_month)
+    recs_by_publisher = {}
+    for rec in fs_records:
+        for month_year in month_years:
+            if rec['month'] == month_year['month'] and rec['year'] == month_year['year']:
+                if rec['publisher_id'] not in recs_by_publisher:
+                    recs_by_publisher[rec['publisher_id']] = rec['hours']
+                else:
+                    recs_by_publisher[rec['publisher_id']
+                        ] = recs_by_publisher[rec['publisher_id']] + rec['hours']
+    active = 0
+    inactive = 0
+    for pub in recs_by_publisher:
+        if recs_by_publisher[pub] > 0:
+            active = active + 1
+        else:
+            inactive = inactive + 1
+    return (active, inactive)

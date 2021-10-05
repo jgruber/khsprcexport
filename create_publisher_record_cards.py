@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-from khsprcexport import exporters
 import os
 import sys
 import argparse
@@ -8,6 +7,7 @@ import datetime
 
 import khsprcexport.constants as constants
 import khsprcexport.importers as importers
+import khsprcexport.exporters as exporters
 import khsprcexport.utils as utils
 
 
@@ -158,15 +158,42 @@ def _generate_summary_reports(output_dir, fsgs, publishers, fsrecords, json_outp
                               1: 4, 2: 5, 3: 6, 4: 7, 5: 8, 6: 9, 7: 10, 8: 11}
     second_sy_month_indexes = {9: 12, 10: 13, 11: 14, 12: 15,
                                1: 16, 2: 17, 3: 18, 4: 19, 5: 20, 6: 21, 7: 22, 8: 23}
+    # used to get active, inactive .. see comments below
+    # index_to_month_year = {
+    #    0: (9, service_years[0] - 1), 
+    #    1: (10, service_years[0] - 1),
+    #    2: (11, service_years[0] - 1),
+    #    3: (12, service_years[0] -1),
+    #    4: (1, service_years[0]),
+    #    5: (2, service_years[0]),
+    #    6: (3, service_years[0]),
+    #    7: (4, service_years[0]),
+    #    8: (5, service_years[0]),
+    #    9: (6, service_years[0]),
+    #    10: (7, service_years[0]),
+    #    11: (8, service_years[0]),
+    #    12: (9, service_years[1] - 1),
+    #    13: (10, service_years[1] - 1),
+    #    14: (11, service_years[1] - 1),
+    #    15: (12, service_years[1] -1),
+    #    16: (1, service_years[1]),
+    #    17: (2, service_years[1]),
+    #    18: (3, service_years[1]),
+    #    19: (4, service_years[1]),
+    #    20: (5, service_years[1]),
+    #    21: (6, service_years[1]),
+    #    22: (7, service_years[1]),
+    #    23: (8, service_years[1]),
+    #}
 
-    pub_ids = []
+    all_pub_ids = []
 
     for fsg in fsgs:
         for pub in fsg['publishers']:
-            pub_ids.append(pub['id'])
+            all_pub_ids.append(pub['id'])
 
     for sr in fsrecords:
-        if sr['publisher_id'] in pub_ids and sr['service_year'] in service_years:
+        if sr['publisher_id'] in all_pub_ids and sr['service_year'] in service_years:
             month_index = 0
             if sr['service_year'] == service_years[0]:
                 month_index = first_sy_month_indexes[sr['month']]
@@ -270,8 +297,14 @@ def _generate_summary_reports(output_dir, fsgs, publishers, fsrecords, json_outp
         r['remarks'] = "%d reports" % r['remarks']
     for r in auxiliary_pioneer_reports['reports']:
         r['remarks'] = "%d reports" % r['remarks']
-    for r in publisher_reports['reports']:
-        r['remarks'] = "%d reports" % r['remarks']
+    # This doesn't work because KHS adds 6 months before a publish began publishing
+    # So your inactive account shows high if you don't know the month they moved in
+    for indx, r in enumerate(publisher_reports['reports']):
+    #    (month, year) = index_to_month_year[indx]
+    #    print("\n\nGetting active_inactive %d-%d\n\n" % (year, month))
+    #    (active, inactive) = utils.get_active_inactive_publisher_count(fsrecords, year, month)
+    #    r['remarks'] = "%d reports %d active %d inactive " % (r['remarks'], active, inactive)
+        r['remarks'] = "%d reports  " % (r['remarks'])
     if json_output:
         os.makedirs(output_dir, exist_ok=True)
         report_out_file = "%s.json" % pioneer_reports['header']['file_name_prefix']
