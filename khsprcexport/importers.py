@@ -120,7 +120,7 @@ def create_field_service_groups(fsg_file_path, names_path, excludes=[]):
         deceased = False
         if vals[deceased_index]:
             deceased = True
-        if not deceased:
+        if not deceased and not moved_date:
             publishers[vals[0]] = {
                 'id': vals[0],
                 'last_name': vals[last_name_index],
