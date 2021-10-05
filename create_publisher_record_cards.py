@@ -352,7 +352,7 @@ def main():
 
     for file in required_files:
         file_path = os.path.join(args.khsdatadir, file)
-        file_path = f'"{file_path}"'
+        # file_path = f'"{file_path}"'
         if not os.path.exists(file_path):
             print("\nCan not find %s, a required file\n" % file_path)
             sys.exit(1)
