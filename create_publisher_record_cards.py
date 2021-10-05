@@ -159,8 +159,14 @@ def _generate_summary_reports(output_dir, fsgs, publishers, fsrecords, json_outp
     second_sy_month_indexes = {9: 12, 10: 13, 11: 14, 12: 15,
                                1: 16, 2: 17, 3: 18, 4: 19, 5: 20, 6: 21, 7: 22, 8: 23}
 
+    pub_ids = []
+
+    for fsg in fsgs:
+        for pub in fsg['publishers']:
+            pub_ids.append(pub['id'])
+
     for sr in fsrecords:
-        if sr['service_year'] in service_years:
+        if sr['publisher_id'] in pub_ids and sr['service_year'] in service_years:
             month_index = 0
             if sr['service_year'] == service_years[0]:
                 month_index = first_sy_month_indexes[sr['month']]
@@ -179,7 +185,7 @@ def _generate_summary_reports(output_dir, fsgs, publishers, fsrecords, json_outp
                 mr = pioneer_reports['reports'][month_index]
                 mr['placements'] = mr['placements'] + sr['placements']
                 mr['video_showings'] = mr['video_showings'] + sr['video_showings']
-                mr['hours'] = mr['hours'] + sr['hours']
+                mr['hours'] = mr['hours'] + round(sr['hours'], 2)
                 mr['return_visits'] = mr['return_visits'] + sr['hours']
                 mr['studies'] = mr['studies'] + sr['studies']
                 if isinstance(mr['remarks'], str):
@@ -198,7 +204,7 @@ def _generate_summary_reports(output_dir, fsgs, publishers, fsrecords, json_outp
                 mr = auxiliary_pioneer_reports['reports'][month_index]
                 mr['placements'] = mr['placements'] + sr['placements']
                 mr['video_showings'] = mr['video_showings'] + sr['video_showings']
-                mr['hours'] = mr['hours'] + sr['hours']
+                mr['hours'] = mr['hours'] + round(sr['hours'], 2)
                 mr['return_visits'] = mr['return_visits'] + sr['hours']
                 mr['studies'] = mr['studies'] + sr['studies']
                 if isinstance(mr['remarks'], str):
@@ -217,7 +223,7 @@ def _generate_summary_reports(output_dir, fsgs, publishers, fsrecords, json_outp
                 mr = publisher_reports['reports'][month_index]
                 mr['placements'] = mr['placements'] + sr['placements']
                 mr['video_showings'] = mr['video_showings'] + sr['video_showings']
-                mr['hours'] = mr['hours'] + sr['hours']
+                mr['hours'] = mr['hours'] + round(sr['hours'], 2)
                 mr['return_visits'] = mr['return_visits'] + sr['hours']
                 mr['studies'] = mr['studies'] + sr['studies']
                 if isinstance(mr['remarks'], str):
