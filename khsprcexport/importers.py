@@ -136,8 +136,7 @@ def create_field_service_groups(fsg_file_path, names_path, excludes=[]):
                 'date_of_birth': do_birth,
                 'baptized': baptized,
                 'unbatized_publisher': unbaptized_publisher,
-                'date_immersed': do_baptism,
-                'moved_date': moved_date
+                'date_immersed': do_baptism
             }
             fsg_n[fsg_id].append(
                 publishers[vals[0]]
